@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://615rc37wc6gh"]
+
+[ext_resource type="Theme" uid="uid://cpefrpy8pw3a" path="res://main_theme.tres" id="1_gy3gl"]
+[ext_resource type="Script" uid="uid://b0n7pudtigcce" path="res://scenes/card_ui/card_state_maschine.gd" id="2_els2s"]
+[ext_resource type="Script" uid="uid://q614nk5xtf33" path="res://scenes/card_ui/card_states/card_base_state.gd" id="3_s72om"]
+[ext_resource type="Script" uid="uid://c0udgnrvb17ot" path="res://scenes/card_ui/card_states/card_clicked_state.gd" id="4_orrkt"]
+[ext_resource type="Script" uid="uid://36ut8ansmekj" path="res://scenes/card_ui/card_states/card_dragging_state.gd" id="5_yxx8x"]
+[ext_resource type="Script" uid="uid://cnonbqn64x5xy" path="res://scenes/card_ui/card_states/card_released_state.gd" id="6_ci03s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvhh7"]
+size = Vector2(50, 70)
+
+[node name="CardUI" type="Control" unique_id=585001235]
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -462.0
+offset_bottom = -218.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_gy3gl")
+
+[node name="Color" type="ColorRect" parent="." unique_id=664332153]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.17577624, 0.37278685, 0.35077664, 1)
+
+[node name="State" type="Label" parent="." unique_id=1427142378]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "state"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DropPointTrigger" type="Area2D" parent="." unique_id=1847428542]
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropPointTrigger" unique_id=608192315]
+position = Vector2(25, 35)
+shape = SubResource("RectangleShape2D_gvhh7")
+
+[node name="CardStateMaschine" type="Node" parent="." unique_id=459000331 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_els2s")
+initial_state = NodePath("CardBaseState")
+
+[node name="CardBaseState" type="Node" parent="CardStateMaschine" unique_id=944062780]
+script = ExtResource("3_s72om")
+
+[node name="CardClickedState" type="Node" parent="CardStateMaschine" unique_id=424960136]
+script = ExtResource("4_orrkt")
+state = 1
+
+[node name="CardDraggingState" type="Node" parent="CardStateMaschine" unique_id=1559259352]
+script = ExtResource("5_yxx8x")
+state = 2
+
+[node name="CardReleasedState" type="Node" parent="CardStateMaschine" unique_id=848093766]
+script = ExtResource("6_ci03s")
+state = 4
